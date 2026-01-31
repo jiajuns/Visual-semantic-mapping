@@ -1,0 +1,239 @@
+# ============================================================================
+# Semantic Mapping Configuration
+# 语义建图统一配置文件
+# ============================================================================
+
+# ===========================================================================
+# 1. RealSense 相机参数
+# ===========================================================================
+realsense:
+  # 深度对齐到彩色图像，确保 RGB 和 Depth 像素一一对应
+  # 关闭会导致点云投影错位
+  align_depth_enable: true
+  
+  # 硬件级时间同步，确保 RGB/Depth/IMU 时间戳一致
+  # 关闭可能导致运动模糊和深度错位
+  enable_sync: true
+  
+  # 启用陀螺仪，提供角速度数据用于 VIO
+  enable_gyro: true
+  
+  # 启用加速度计，提供线加速度数据用于 VIO
+  enable_accel: true
+  
+  # IMU 融合方式: 0=不融合, 1=线性插值, 2=复制(推荐)
+  # 2 能减少 IMU 数据丢失，但延迟略高
+  unite_imu_method: 2
+  
+  # RGB 相机配置: "宽x高x帧率"
+  # 分辨率↑ → 精度↑ 但 CPU/GPU 负载↑
+  # 帧率↓ → 稳定性↑ 但运动模糊风险↑
+  rgb_camera_profile: "640x480x15"
+  
+  # 深度模块配置: "宽x高x帧率"
+  # 需与 RGB 保持相同分辨率以确保对齐
+  depth_module_profile: "640x480x15"
+  
+  # 陀螺仪采样率 (Hz)，越高角速度估计越精确
+  # 但过高可能导致数据积压，推荐 200-400
+  gyro_fps: 200
+  
+  # 加速度计采样率 (Hz)，越高重力/运动估计越精确
+  # 推荐 100-250，与 gyro_fps 配合
+  #accel_fps: 100
+  accel_fps: 250
+
+# ===========================================================================
+# 2. RTAB-Map 参数
+# ===========================================================================
+rtabmap:
+  # 数据库保存路径，用于存储地图和回环信息
+  database_path: "/home/jj/project_total/camera_ws/src/semantic_builder/map/rtabmap.db"
+  
+  # 启动时删除已有数据库，true=每次重新建图
+  # 设为 false 可继续上次建图
+  delete_db_on_start: true
+  
+  topics:
+    rgb: "/camera/color/image_raw"
+    depth: "/camera/aligned_depth_to_color/image_raw"
+    camera_info: "/camera/color/camera_info"
+  
+  frames:
+    frame_id: "camera_link"
+    odom_frame_id: "odom"
+    map_frame_id: "map"
+  
+  sync:
+    # 近似时间同步，允许 RGB/Depth 时间戳有微小差异
+    # 关闭需严格同步，可能丢帧
+    approx_sync: true
+    
+    # 消息队列深度，越大容许延迟越大但内存占用↑
+    # 网络延迟高时可增大，推荐 10-50
+    queue_size: 30
+    topic_queue_size: 30
+    sync_queue_size: 30
+    
+    # QoS 可靠性: 0=RELIABLE(可靠传输), 1=BEST_EFFORT
+    # RELIABLE 保证不丢包但延迟高，BEST_EFFORT 低延迟但可能丢包
+    qos: 0
+  
+  grid:
+    # 栅格分辨率 (米)，越小点云越精细但内存/计算量↑
+    # 推荐 0.01-0.05，室内建图 0.02 较平衡
+    cell_size: 0.02
+    
+    # 最大有效深度 (米)，超过此距离的点被过滤
+    # 越大地图范围越广，但远距离噪声↑
+    range_max: 4.0
+    
+    # 最小有效深度 (米)，过滤过近的噪声点
+    # 通常设为 0.1-0.3，避免相机盲区
+    range_min: 0.2
+    
+    # 地面最大高度 (米)，低于此高度视为地面
+    max_ground_height: 0.1
+    
+    # 障碍物最大高度 (米)，超过此高度的点被忽略
+    max_obstacle_height: 2.0
+    
+    # 噪声滤波半径 (米)，半径内邻居不足则视为噪点
+    noise_filtering_radius: 0.05
+    
+    # 噪声滤波最小邻居数，邻居少于此值则过滤
+    # 越大过滤越激进，可能丢失细节
+    noise_filtering_min_neighbors: 3
+  
+  registration:
+    # 配准策略: 0=视觉特征, 1=ICP, 2=视觉+ICP
+    # ICP 对几何结构敏感，视觉对纹理敏感
+    strategy: 1
+  
+  visual:
+    # 视觉特征提取的最大/最小深度 (米)
+    # 超出范围的像素不提取特征
+    max_depth: 4.0
+    min_depth: 0.2
+  
+  rgbd:
+    # 图搜索最大深度，0=无限制
+    # 限制可加速回环检测但可能漏检
+    proximity_max_graph_depth: 0
+    
+    # 角度更新阈值 (弧度)，旋转超过此值才创建新节点
+    # 越小节点越密集，地图精度↑但内存↑
+    angular_update: 0.05
+    
+    # 线性更新阈值 (米)，移动超过此值才创建新节点
+    linear_update: 0.05
+  
+  memory:
+    # 短期记忆节点数，越大回环检测范围越广但内存↑
+    stm_size: 30
+
+# ===========================================================================
+# 3. YOLO 语义分割节点参数
+# ===========================================================================
+yolo_node:
+  # YOLO 模型文件名 (需在 ultralytics 可访问路径)
+  # yolov8n-seg.pt=最快, yolov8s-seg.pt=平衡, yolov8m-seg.pt=精度高
+  model_name: "yolov8s-seg.pt"
+  
+  # 检测置信度阈值，低于此值的检测被过滤
+  # 越低检测越多但误检↑，推荐 0.2-0.5
+  confidence_threshold: 0.25
+  
+  # 帧跳过数，每 N 帧运行一次 YOLO
+  # 离线质量优先建议设为 1
+  frame_skip: 1
+  
+  # 发布/订阅队列深度，越大延迟容忍度↑但内存↑
+  qos_depth: 10
+  
+  topics:
+    rgb_input: "/camera/color/image_raw"
+    depth_input: "/camera/aligned_depth_to_color/image_raw"
+    camera_info: "/camera/color/camera_info"
+    overlay_output: "/yolo/overlay_image"
+    mask_output: "/yolo/semantic_mask"
+    cloud_output: "/yolo/semantic_cloud"
+  
+  # Mask 腐蚀核大小 (像素)，向内收缩 mask 边界
+  # 越大边界收缩越多，减少颜色溢出但物体变小
+  # 设为奇数，推荐 3-7
+  mask_erosion_kernel_size: 5
+
+# ===========================================================================
+# 4. Cloud Saver (TSDF 融合) 节点参数
+# ===========================================================================
+cloud_saver:
+  # 点云和网格保存目录
+  save_dir: "/home/jj/project_total/camera_ws/src/semantic_builder/map"
+  
+  frames:
+    # 与 RTAB-Map 对齐时建议使用 map
+    world_frame: "map"
+    camera_frame: "camera_color_optical_frame"
+    # 输出坐标系应与 world_frame 保持一致
+    output_frame: "map"
+  
+  tsdf:
+    # 体素边长 (米)，越小网格越精细但内存/计算量↑
+    # 推荐 0.01-0.03，0.015 较平衡
+    voxel_length: 0.015
+    
+    # SDF 截断距离 (米)，表面附近的融合范围
+    # 通常设为 3-5 倍 voxel_length
+    sdf_trunc: 0.06
+    
+    # 深度截断 (米)，超过此距离的深度不融合
+    # 大房间可适当增大以覆盖更远区域
+    depth_trunc: 5.0
+    
+    # 深度值缩放因子，RealSense 深度单位是 mm
+    # 1000.0 表示 mm → m 转换
+    depth_scale: 1000.0
+  
+  fusion:
+    # 帧跳过数，每 N 帧融合一次
+    # 离线质量优先建议设为 1
+    frame_skip: 1
+    
+    # 消息同步容差 (秒)，RGB/Depth/Mask 时间差允许范围
+    # 离线回放常有时间戳偏差，建议适当放宽
+    sync_slop: 0.1
+  
+  publish:
+    # 融合点云发布周期 (秒)
+    # 越小更新越频繁但 CPU 负载↑
+    timer_period: 5.0
+
+  visual:
+    # 背景强度缩放 (0-1)，越小语义颜色越突出
+    background_scale: 1.0
+
+  tf:
+    # 等待 TF 的最长时间 (秒)
+    wait_timeout: 0.5
+    # 若 TF 滞后是否使用最新 TF 兜底（质量优先建议 false）
+    use_latest_fallback: true
+
+  intrinsics:
+    # 若相机内参与图像尺寸不一致，自动缩放内参
+    auto_scale: true
+  
+  topics:
+    rgb_input: "/camera/color/image_raw"
+    depth_input: "/camera/aligned_depth_to_color/image_raw"
+    mask_input: "/yolo/semantic_mask"
+    camera_info: "/camera/color/camera_info"
+    mesh_cloud_output: "/tsdf/mesh_cloud"
+
+# ===========================================================================
+# 5. 系统级参数
+# ===========================================================================
+system:
+  # 相机启动后延迟 (秒)，等待相机完全初始化后再启动其他节点
+  # RealSense 通常需要 3-5 秒完成自动曝光调整
+  timer_delay: 5.0

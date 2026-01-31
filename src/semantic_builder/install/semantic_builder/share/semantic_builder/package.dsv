@@ -1,0 +1,9 @@
+source;share/semantic_builder/hook/pythonpath.ps1
+source;share/semantic_builder/hook/pythonpath.dsv
+source;share/semantic_builder/hook/pythonpath.sh
+source;share/semantic_builder/hook/ament_prefix_path.ps1
+source;share/semantic_builder/hook/ament_prefix_path.dsv
+source;share/semantic_builder/hook/ament_prefix_path.sh
+source;../../build/semantic_builder/share/semantic_builder/hook/pythonpath_develop.ps1
+source;../../build/semantic_builder/share/semantic_builder/hook/pythonpath_develop.dsv
+source;../../build/semantic_builder/share/semantic_builder/hook/pythonpath_develop.sh

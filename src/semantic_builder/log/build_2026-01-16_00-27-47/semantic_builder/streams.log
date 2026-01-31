@@ -1,0 +1,29 @@
+[0.400s] Invoking command in '/home/jj/project_total/camera_ws/src/semantic_builder/build/semantic_builder': PYTHONPATH=/home/jj/project_total/camera_ws/src/semantic_builder/build/semantic_builder/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/jj/project_total/camera_ws/src/semantic_builder/build/semantic_builder/build --no-deps symlink_data
+[0.555s] running develop
+[0.663s] running egg_info
+[0.663s] creating semantic_builder.egg-info
+[0.663s] writing semantic_builder.egg-info/PKG-INFO
+[0.664s] writing dependency_links to semantic_builder.egg-info/dependency_links.txt
+[0.664s] writing entry points to semantic_builder.egg-info/entry_points.txt
+[0.664s] writing requirements to semantic_builder.egg-info/requires.txt
+[0.664s] writing top-level names to semantic_builder.egg-info/top_level.txt
+[0.664s] writing manifest file 'semantic_builder.egg-info/SOURCES.txt'
+[0.665s] reading manifest file 'semantic_builder.egg-info/SOURCES.txt'
+[0.665s] writing manifest file 'semantic_builder.egg-info/SOURCES.txt'
+[0.666s] running build_ext
+[0.666s] Creating /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/lib/python3.10/site-packages/semantic-builder.egg-link (link to .)
+[0.666s] Installing cloud_saver script to /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/lib/semantic_builder
+[0.666s] Installing yolo_node script to /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/lib/semantic_builder
+[0.667s] 
+[0.667s] Installed /home/jj/project_total/camera_ws/src/semantic_builder/build/semantic_builder
+[0.667s] running symlink_data
+[0.667s] creating /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/share/ament_index
+[0.667s] creating /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/share/ament_index/resource_index
+[0.667s] creating /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/share/ament_index/resource_index/packages
+[0.667s] symbolically linking /home/jj/project_total/camera_ws/src/semantic_builder/build/semantic_builder/resource/semantic_builder -> /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/share/ament_index/resource_index/packages
+[0.667s] symbolically linking /home/jj/project_total/camera_ws/src/semantic_builder/build/semantic_builder/package.xml -> /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/share/semantic_builder
+[0.667s] creating /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/share/semantic_builder/launch
+[0.667s] symbolically linking /home/jj/project_total/camera_ws/src/semantic_builder/build/semantic_builder/launch/semantic_mapping.launch.py -> /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/share/semantic_builder/launch
+[0.667s] creating /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/share/semantic_builder/rviz
+[0.667s] symbolically linking /home/jj/project_total/camera_ws/src/semantic_builder/build/semantic_builder/rviz/semantic_mapping.rviz -> /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/share/semantic_builder/rviz
+[0.684s] Invoked command in '/home/jj/project_total/camera_ws/src/semantic_builder/build/semantic_builder' returned '0': PYTHONPATH=/home/jj/project_total/camera_ws/src/semantic_builder/build/semantic_builder/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/jj/project_total/camera_ws/src/semantic_builder/build/semantic_builder/build --no-deps symlink_data

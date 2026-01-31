@@ -1,0 +1,16 @@
+running develop
+running egg_info
+writing semantic_builder.egg-info/PKG-INFO
+writing dependency_links to semantic_builder.egg-info/dependency_links.txt
+writing entry points to semantic_builder.egg-info/entry_points.txt
+writing requirements to semantic_builder.egg-info/requires.txt
+writing top-level names to semantic_builder.egg-info/top_level.txt
+reading manifest file 'semantic_builder.egg-info/SOURCES.txt'
+writing manifest file 'semantic_builder.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/lib/python3.10/site-packages/semantic-builder.egg-link (link to .)
+Installing cloud_saver script to /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/lib/semantic_builder
+Installing yolo_node script to /home/jj/project_total/camera_ws/src/semantic_builder/install/semantic_builder/lib/semantic_builder
+
+Installed /home/jj/project_total/camera_ws/src/semantic_builder/build/semantic_builder
+running symlink_data

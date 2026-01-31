@@ -1,0 +1,4 @@
+[console_scripts]
+cloud_saver = semantic_builder.semantic_cloud_saver:main
+yolo_node = semantic_builder.yolo_node:main
+
